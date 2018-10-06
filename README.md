@@ -1,2 +1,384 @@
 # projects-c-
 system  management stores 1.1
+#include<iostream>
+#include <windows.h>
+#include <string>
+#include<fstream>
+#include<cstring>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+struct access
+{
+int num;
+string user_name;
+string password;	
+};
+struct supply
+{
+int mno;
+string mname;
+string mtype;
+float mprice;
+int mqua;	
+};
+struct exports
+{
+int mno;
+string mname;
+string mtype;
+float mprice;
+int mqua;
+float mpriceall;
+float priceall;	
+};
+
+
+//
+static int M=0;
+//const
+void get_data (supply sup[],int size);
+void out_data (exports exp[],int size);
+void data_access (access acc);
+main()
+{//system ("time");
+	system("COLOR 70");
+	cout<<"\n\t\t\t\t\t_________________________________________ \n\n";
+	cout<<"\n\n\t\t\t\t\t\t\t<welcome>\n\n";
+	cout<<"\n\t\t\t\t\t   *****  system  management stores 1.1  ***** \n\n\n";
+	cout<<"\n\t\t\t\t\t_________________________________________ \n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+time_t now = time(0);
+char* dt = ctime(&now);
+
+  
+
+   // convert now to tm struct for UTC
+
+	cout<<"\n_________________________________________\n\a";system("PAUSE");	
+
+	
+	
+access acc;
+int s;
+char b;
+char ba;
+int x,a,nact=1,n=0;
+
+ 	data_access(acc);
+ //	access (acc.user_name,acc);
+	h:
+
+		
+system ("cls");
+cout<<"User name> "<<acc.user_name<<"admin\n";
+cout << "The local date and time is: " << dt << "\n____________________________________________________________________\n\n";	
+cout<<"-Open the supply press the number (1)\n\n-open the export press the number (2)\n\n-open an inventory of the goods (3)\n\n-open a report of sales (4)\n\n-click to any number to get out\n";
+cout<< "\n____________________________________________________________________\n>>>";
+cin>>b;
+	
+if(b=='1')
+{
+char b1;
+system ("cls");
+v:
+cout<<"Add your (supply) press (y)\nsearch in register supply press (s)\nback press any char()\n\a";
+cin>>b1;
+
+
+
+if(b1=='y')
+{
+	system ("cls");
+cout<<"how number m supply: \n";
+cin>>s;
+supply sup[s];	
+get_data(sup,s);
+	ofstream w("supply.txt",ios::app);
+//	w.print("supply.txt");
+	w<<"Number\tName\tType\tPrice\tQuantity\n";
+	w<<"======\t======\t======\t======\t======\n";
+	for(int i=0;i<s;i++)
+	w<<i+1<<"\t"<<sup[i].mname<<"\t"<<sup[i].mtype<<"\t"<<sup[i].mprice<<"\t"<<sup[i].mqua<<"\n";
+
+cout<<"\nBeen add your the syuppl press any char\n\n\a";
+system("PAUSE");
+
+w.close();
+goto h;
+}
+else if(b1=='s')
+{
+ifstream load("supply.txt",ios::app);
+int x,counter=0;
+char j;
+string text,search;
+system ("cls");
+//w.open("supply.txt");
+
+cout<<"\nenter word to search\n";
+cin>>search ;
+while(load.eof()==false){
+load>>text;
+if(text==search)
+{
+x=10;
+counter++;
+}
+}
+if(x==10){
+if(counter>0)
+cout<<"it's found"<<counter<<"times\n\a";
+else
+cout<<"it's not found\n\n\a";
+	system("PAUSE");
+goto h;
+}}
+else
+goto h;}
+
+else if(b=='2'){
+int e;
+string names;
+
+	system ("cls");
+cout<<"how number m export: \n";
+cin>>e;
+
+exports exp[e];	
+out_data(exp,e);
+cout<<"Enter the name of recioient:";getline(cin,names);cout<<endl;
+
+char q;
+float tot;
+	ofstream ex("exports.txt",ios::app);
+	ofstream b("bell.txt");
+	ex<<"\nNumber\tName\tType\tPrice\tQuantity\tthe total\n";
+	ex<<"======\t======\t======\t======\t======\t\t========\n";
+	for(int i=0;i<e;i++){
+	ex<<i+1<<"\t"<<exp[i].mname<<"\t"<<exp[i].mtype<<"\t"<<exp[i].mprice<<"\t"<<exp[i].mqua<<"\t\t"<<exp[i].mpriceall<<endl;}
+///////////////////////////////////////////////////////////////////////////////
+	b<<"\n\t\t  <Bell>\n";
+	for(int m=1;m<2;m++){M=M+1;}
+	b<<"\nDate of sale :"<<dt<<endl;
+	b<<"Invoice number :"<<M<<endl;
+	b<<"The name of recioient:"<<names;
+	b<<"\nNumber\tName\tType\tPrice\tQuantity\tthe total\n";
+ 	b<<"======\t======\t======\t======\t======\t\t========\n";
+ 	for(int i=0;i<e;i++){
+	b<<i+1<<"\t"<<exp[i].mname<<"\t"<<exp[i].mtype<<"\t"<<exp[i].mprice<<"\t"<<exp[i].mqua<<"\t\t"<<exp[i].mpriceall<<endl;
+	tot=tot+exp[i].mpriceall;}
+//while (b.eof()==false){
+//for(int i=0;i<e;i++)
+//b<<"\ntotal all: "<<exp[i].priceall=exp[i].priceall+exp[i].mpriceall;
+//}
+	b<<"\nthe total all: "<<tot<<endl<<endl;
+	cout<<"\n";
+	system("PAUSE");
+	cout<<"\nPrint bell press(p)\nback press any char()\n";
+	cin>>q;
+	if(q=='p')
+	{ifstream b("bell.txt");
+	string exm;
+	while(b.eof()==false){
+getline(b,exm);
+cout<<"\n"<<exm<<endl;
+}
+	system("bell.txt"); 
+	system ("print bell.txt");
+	b.close();
+	goto h;
+	}
+	else
+	goto h;
+	}
+
+
+
+else if(b=='3'){
+char u;
+ifstream load("supply.txt",ios::app);
+
+
+string Example;
+system ("cls");
+cout<<"\nPrint inventory enter (p) back press any char \n";
+while(load.eof()==false){
+getline(load,Example);
+cout<<"\n"<<Example<<endl;
+}
+cin>>u;
+load.close();
+if(u=='p')
+{
+cout<<"\nPrint inventory\n\n";
+system("supply.txt");
+system("print supply.txt");
+goto h;
+}
+else
+goto h;
+}
+
+else if(b=='4')
+{char u;
+ifstream loade("exports.txt",ios::app);
+
+
+string exampl;
+system ("cls");
+cout<<"\nPrint report of sales enter (p) back press any char \n";
+while(loade.eof()==false){
+getline(loade,exampl);
+cout<<"\n"<<exampl<<endl;
+}
+
+
+cin>>u;
+
+if(u=='p')
+{
+cout<<"\nPrint all sales\n\n";
+system("exports.txt");
+system("print exports.txt");
+}
+else
+goto h;
+}
+
+    
+    else
+    {
+     system ("cls");
+      string ext;
+
+   
+    cout<<"Exit the program\nyes/no\n";
+    cin>>ext;
+    if(ext=="yes")
+         system ("cls");
+
+    cout<<"\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t<good bay>\n\n\n\n\n\n\n\n\n\n\n\n";
+    if(ext=="no"){
+       goto h;}
+}
+}
+void get_data (supply sup[],int size)
+{
+
+	for(int i=0;i<size;i++)
+	{
+	
+
+	cout<<"ENTER mname: \n";
+	cin>> sup[i].mname;
+	cout<<"ENTER mtype: \n";
+	cin>> sup[i].mtype;
+	cout<<"ENTER mprice: \n";
+	(cin>> sup[i].mprice).get();
+	cout<<"ENTER mnumber: \n";
+	(cin>> sup[i].mqua).get();
+	cout<<"\n";
+	}
+
+}
+void out_data (exports exp[],int size)
+{
+for(int i=0;i<size;i++)
+	{
+	
+
+	cout<<"ENTER name: \n";
+	cin>>exp[i].mname;
+	cout<<"ENTER type: \n";
+	cin>>exp[i].mtype;
+	cout<<"ENTER price: \n";
+	(cin>> exp[i].mprice).get();
+	cout<<"ENTER number: \n";
+	(cin>> exp[i].mqua).get();
+	exp[i].mpriceall=exp[i].mprice*exp[i].mqua;
+	exp[i].priceall=exp[i].priceall+exp[i].mpriceall;
+	cout<<"\n";
+	}
+
+	
+}
+
+void data_access (access acc)
+{
+
+	n:
+time_t now = time(0);
+char* dt = ctime(&now);
+	char v,n;
+	string ad;
+	string pas;
+	string bdlpas;
+	string exits;
+	string user;
+	string pasw;
+//	user=acc.user_name;
+	
+	system ("cls");
+//	cout<<"if if you want to go out press (e)";
+//		cin>>n;
+	cout<<"\n\n-Enter User Name> ";
+//	if(n!='e'){
+	
+	(cin>>acc.user_name).get();
+	if(acc.user_name == "admin" or acc.user_name == user)
+	{
+	cout<<"\n- Enter Password> ";
+	(cin>>acc.password).get();
+	if(acc.password == "asd12345" or acc.password == pasw)
+	{
+	cout<<"\nAdd user & password new (y|n): ";
+	cin>>v;
+	if(v=='y')
+	{
+	cout<<"\nnew user> ";
+	cin>>user ;
+	
+	cout<<"\nnew password> ";
+	cin>>pasw;
+	ofstream p("access.txt",ios::app);
+	p<<"\n\n____________________________________________________\nUSER\t\tPASSWORD\n";
+	p<<"====\t\t========\n";
+	p<<user<<"\t\t"<<pasw;
+	p<<"\n______________________________________________________\n";
+	p<<"\ntime access user:"<<dt<<"user:"<<acc.user_name<<endl;
+	system ("cls");
+	}
+	else
+	system ("cls");
+	cout<<"\n\n\t\tlst go\n\n\n\a";
+	system("PAUSE");
+	}
+	
+	else
+	{
+	cout<<"\nError password\n\n ";
+	system("PAUSE");
+	system ("cls");
+//	cin>>exits;cout<<endl;
+//	if(exits == "exit")
+//	{system ("exit");
+//	}
+//	else
+	goto n;
+	}}
+	else if (acc.user_name == "123")
+	{system ("cls");
+	cout<<"\n\n\t\tlst go\n\n\n\a";
+	system("PAUSE");
+	}
+	else
+	{
+	cout<<"\nError user name\n\n ";
+	system("PAUSE");
+	system ("cls");
+	goto n;
+	}
+	//}
+}
+
+	
